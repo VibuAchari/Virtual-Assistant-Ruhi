@@ -130,7 +130,7 @@ You can create a new user via `/signup`. Ruhi uses MySQL to persist user details
 
 ## 🙌 Credits
 
-Created with 💙 by **[Vibusha S Achari]**  
+Created with 💙 by **Vibusha S Achari**  
 
 
 ---
