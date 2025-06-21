@@ -1,0 +1,14 @@
+tk
+pyttsx3
+SpeechRecognition
+pyaudio
+wikipedia
+pyjokes
+mysql-connector-python
+opencv-python
+fpdf
+plyer
+wolframalpha
+scikit-learn
+numpy
+Pillow
