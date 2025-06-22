@@ -1,141 +1,157 @@
-# Virtual-Assistant-Ruhi
-# 🤖 Ruhi – Your Personal Virtual Assistant (Web Edition)
+# Virtual Assistant: Ruhi
 
-**Ruhi** is a fully modular, voice-powered virtual assistant rebuilt with a modern web interface using **Flask**, **MySQL**, **Tailwind CSS**, and **pure Python logic** (no AI).  
-She can handle your queries, track command history, open apps/websites, tell jokes, summarize Wikipedia results, do math, and more — all from a slick browser interface. ✨
+**Ruhi** is a voice-driven desktop assistant developed in Python. It provides offline interaction, text-to-speech responses, command history logging, and persistent data storage using MySQL. The application features a modern GUI with a dark glassmorphism design and is packaged to run independently on Windows systems.
 
 ---
 
-## 📂 Project Structure
+## Features
+
+- 🎤 Offline voice recognition using `speech_recognition`
+- 🗣️ Text-to-speech responses via `pyttsx3`
+- 🧠 Rule-based NLP classification
+- 💾 Persistent command history stored in a **MySQL database**
+- 📄 Exportable command logs in PDF format (`fpdf`)
+- 🖥️ GUI built with `Tkinter` featuring a splash screen and dark theme
+- 🧪 Built-in microphone testing utility
+- 🔌 Fully offline, no cloud dependencies
+- 📦 One-click `.exe` build support via PyInstaller
+
+---
+
+## Project Structure
 
 ```
-ruhi-assistant/
-├── app.py
-├── config.py
-├── requirements.txt
-│
-├── assistant/
-│   ├── __init__.py
-│   ├── core.py
-│   ├── tts.py
-│   └── recognizer.py
-│
-├── database/
-│   ├── __init__.py
-│   └── mysql_handler.py
-│
-├── static/
-│   └── css/
-│       └── tailwind.css (optional if using CDN)
-│
-├── templates/
-│   ├── login.html
-│   ├── signup.html
-│   └── dashboard.html
+Virtual-Assistant-Ruhi/
+├── main.py                    # Entry point
+├── ui/
+│   ├── interface.py           # Main UI and interaction
+│   ├── splash.py              # Splash screen window
+│   └── test_mic.py            # Mic testing utility
+├── core/
+│   ├── voice.py               # Speech recognition & TTS
+│   ├── logic.py               # Rule-based NLP classifier
+│   └── database.py            # MySQL connection & logging
+│   └── utils.py               # main functionalities
+│   └── nlp.py                 #classification and command matching
+│   └── media.py
+│   └── pdfgen.py
+│   └── wolfram.py             
+├── resources/                 # UI assets (images/icons)
+├── requirements.txt           # Python dependencies
+└── README.md                  # Project documentation
 ```
 
 ---
 
-## 🚀 Features
+## Requirements
 
-✅ Voice-controlled assistant (mic input using browser speech API)  
-✅ Flask-powered web UI with Tailwind CSS  
-✅ User login & signup with MySQL authentication  
-✅ Command history (stored + downloadable PDF)  
-✅ Response output via text and speech (using `pyttsx3`)  
-✅ Math calculations, jokes, Wikipedia summaries  
-✅ Battery checks, recent query tracking, and more
+- Python 3.8+
+- MySQL Server running locally (or accessible remotely)
+- Internet only for package installation (not required for runtime)
 
 ---
 
-## 💠 Installation
+## Installation
 
-### 1. Clone the Repo
+### Clone the repository
+
 ```bash
-git clone https://github.com/yourusername/ruhi-assistant.git
-cd ruhi-assistant
+git clone https://github.com/yourusername/Virtual-Assistant-Ruhi.git
+cd Virtual-Assistant-Ruhi
 ```
 
-### 2. Create & Activate Virtual Environment
+### Create and activate a virtual environment
+
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+python -m venv .venv
+.venv\Scripts\activate      # For Windows
 ```
 
-### 3. Install Requirements
+### Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### 4. Configure Database
+---
 
-Make sure you have MySQL running. Then open `config.py` and set your credentials:
+## MySQL Setup
+
+Create a MySQL database (e.g., `ruhi_assistant`) and update the credentials inside `core/database.py`:
 
 ```python
-DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': 'your_password',
-    'database': 'ruhidb'
-}
+conn = mysql.connector.connect(
+    host="localhost",
+    user="yourusername",
+    password="yourpassword",
+    database="ruhi_assistant"
+)
 ```
 
-✅ Ruhi will auto-create the necessary tables on first run.
+The assistant automatically creates a `history` table if it does not exist.
 
 ---
 
-## 🔊 How to Run
+## Running the Assistant
 
 ```bash
-python app.py
+python main.py
 ```
 
-Then visit: [http://localhost:5000](http://localhost:5000)
+This will display the splash screen and then launch the main interface. Click the mic button to give voice commands.
 
 ---
 
-## 🎙️ Browser Voice Input
+## Testing the Microphone
 
-Click the 🎧 mic icon next to the input box — your browser will convert speech to text using the Web Speech API and Ruhi will take care of the rest!
-
----
-
-## 🔐 Login Credentials
-
-You can create a new user via `/signup`. Ruhi uses MySQL to persist user details and query history.
+```bash
+python
+>>> from core.voice import test_microphone
+>>> test_microphone()
+```
 
 ---
 
-## 📸 Screenshots
+## Packaging into Executable (Windows)
 
-| Login Page                         | Dashboard with Commands             |
-|-----------------------------------|-------------------------------------|
-| ![login](assets/login.png)        | ![dashboard](assets/dashboard.png) |
+Install PyInstaller:
 
-> Add actual screenshot links when you upload the images to your repo.
+```bash
+pip install pyinstaller
+```
 
----
+Then build:
 
-## 👨‍💻 Built With
+```bash
+pyinstaller --noconfirm --onefile --windowed --add-data "resources;resources" main.py
+```
 
-- [Flask](https://flask.palletsprojects.com/)
-- [MySQL Connector](https://pypi.org/project/mysql-connector-python/)
-- [Tailwind CSS](https://tailwindcss.com/)
-- [SpeechRecognition](https://pypi.org/project/SpeechRecognition/)
-- [pyttsx3](https://pypi.org/project/pyttsx3/)
-- [Wikipedia API](https://pypi.org/project/wikipedia/)
-- [Plyer](https://pypi.org/project/plyer/)
+Your executable will appear inside the `dist/` folder.
 
 ---
 
-## 🙌 Credits
+## .gitignore Recommendation
 
-Created with 💙 by **Vibusha S Achari**  
-
+```gitignore
+.venv/
+__pycache__/
+*.pyc
+*.log
+dist/
+build/
+*.spec
+resources/history.pdf
+```
 
 ---
 
-## 📜 License
+## License
 
-MIT License — Use it, remix it, rule with it.
+This project is licensed under the MIT License.
+
+---
+
+## Author
+
+**Developer:** [@VibuAchari](https://github.com/VibuAchari)  
 
