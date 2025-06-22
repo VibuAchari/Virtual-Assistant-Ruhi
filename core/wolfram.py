@@ -2,7 +2,7 @@
 
 import wolframalpha
 
-APP_ID = "V3P5H3-WEQ9KTLLL8"  # Replace with your own Wolfram Alpha App ID
+APP_ID = "###################"  # Replace with your own Wolfram Alpha App ID
 client = wolframalpha.Client(APP_ID)
 
 def query(text):
