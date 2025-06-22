@@ -8,7 +8,7 @@ import os
 db = mysql.connect(
     host="localhost",
     user="root",
-    passwd="Vibusha123"
+    passwd="your_passwrd"
 )
 data = db.cursor()
 
